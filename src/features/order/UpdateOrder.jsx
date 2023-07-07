@@ -1,0 +1,26 @@
+import { useFetcher } from "react-router-dom";
+import { updateOrder } from "../../services/apiRestaurant";
+import Button from "../../ui/Button";
+
+ 
+function UpdateOrder() {
+  const fetcher = useFetcher();
+  console.log(fetcher);
+  return (
+    <fetcher.Form method="PATCH" className="text-right">
+      <Button type="small" disabled={fetcher.state !== "idle"}>
+        {fetcher.state === "submitting" && "Submitting..."}
+        {fetcher.state === "loading" && "Processing..."}
+        {fetcher.state === "idle" && "Make priority"}
+      </Button>
+    </fetcher.Form>
+  );
+}
+
+export default UpdateOrder;
+
+export async function action({ params }) {
+  const data = { priority: true };
+  await updateOrder(params.orderId, data);
+  return null;
+}
